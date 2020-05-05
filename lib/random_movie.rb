@@ -18,7 +18,7 @@ class RandomMovie
     end
 
     def self.cache_years
-        doc = Nokogiri::HTML(open("https://www.rottentomatoes.com/top/bestofrt/top_100_action__adventure_movies/"))
+        doc = Nokogiri::HTML(open("https://www.rottentomatoes.com/top/bestofrt/?year=2018"))
         @@years = doc.css(".btn-group.btn-primary-border-dropdown li a").map do |year|
             {:name => year.text.split("\n")[1].strip,
              :url => year.attribute("href").text}
