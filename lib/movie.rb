@@ -6,4 +6,11 @@ class Movie
         attributes.each { |key, value| self.send(("#{key}="), value) }
     end
 
+    def formatted_info
+        puts "#{title}"
+        puts "#{genre}"
+        puts "#{year}, #{rating}, #{runtime}"
+        puts "#{description}"
+    end
+
 end
