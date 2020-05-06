@@ -13,6 +13,26 @@ class RandomMovie
     @@genres = {}
     @@years = {}
 
+    def self.random_by_genre(genre)
+
+        doc = Nokogiri::HTML(open(self.genres[genre]))
+        movies = doc.css(".table .unstyled.articleLink").map do |movie|
+            if Finder.find_by_movie_title(white_space_fix(movie.text)).length == 0
+                new_movie = Movie.new
+                new_movie.title = white_space_fix(movie.text)
+                new_movie.url = movie.attribute("href").text
+            else
+                find_by_movie_title(title)
+            end
+        end
+
+        movies.sample
+        
+    end
+
+    def self.random_by_year(year)
+    end
+
     def self.genres
 
         if @@genres = {}
@@ -45,6 +65,6 @@ class RandomMovie
         text.split("\n")[1].strip
     end
 
-    #binding.pry
+    binding.pry
 
 end
