@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require "./lib/random-movie-picker"
+
+RandomMoviePicker::CLI.new.call

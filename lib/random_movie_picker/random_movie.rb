@@ -3,6 +3,7 @@ require "nokogiri"
 require "pry"
 require_relative "./movie.rb"
 require_relative "../concerns/finder.rb"
+require_relative "../concerns/finder.rb"
 
 class RandomMovie
 
