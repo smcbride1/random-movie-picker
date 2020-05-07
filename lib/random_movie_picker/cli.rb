@@ -6,6 +6,7 @@ class RandomMoviePicker::CLI
 
         clear_terminal
         puts "Hi! I'm the Random Movie Picker! 🎬"
+        puts ""
         start
 
     end
@@ -18,7 +19,6 @@ class RandomMoviePicker::CLI
 
     def select_category
 
-        puts ""
         puts "Which category would you like to pick from?"
         puts "1. Genre 🎭"
         puts "2. Year 📅"
@@ -26,7 +26,7 @@ class RandomMoviePicker::CLI
 
         input = gets.strip.to_i
         
-        if input >= 0 && input <= 3
+        if input > 0 && input <= 3
             
             case input
             when 1
@@ -38,6 +38,7 @@ class RandomMoviePicker::CLI
             end
         else
             "❌ Sorry, I don't recognize what you mean by '#{input}'."
+            clear_terminal
             select_category
         end
 
@@ -49,7 +50,8 @@ class RandomMoviePicker::CLI
         print_genres
         puts ""
         puts "What genre are you looking for? (type in the number)"
-        genre = RandomMoviePicker::Categories.genres.keys[gets.strip.to_i - 1]
+        input = gets.strip.to_i
+        genre = RandomMoviePicker::Categories.genres.keys[input - 1] if input > 0
         if genre != nil
             clear_terminal
             puts "Awesome! Searching for a(n) #{genre} movie, this might take a couple of seconds..."

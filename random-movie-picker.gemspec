@@ -6,9 +6,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Stephen McBride"]
   spec.email         = ["stevemcbride3@gmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because RubyGems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = "Random movie from Rotten Tomatoes' top 100 lists."
+  spec.description   = "Picks a random movie from Rotten Tomatoes top 100 lists based off of a category and subcategory."
+  spec.homepage      = "https://github.com/smcbride1/random-movie-picker"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
