@@ -4,9 +4,6 @@ class RandomMoviePicker::CLI
 
     def call
 
-        clear_terminal
-        puts "Hi! I'm the Random Movie Picker! 🎬"
-        puts ""
         start
 
     end
@@ -19,13 +16,16 @@ class RandomMoviePicker::CLI
 
     def select_category
 
+        clear_terminal
+        puts "Hi! I'm the Random Movie Picker! 🎬"
+        puts ""
         puts "Which category would you like to pick from?"
         puts "1. Genre 🎭"
         puts "2. Year 📅"
         puts "3. Surprise me! 🎉"
 
         input = gets.strip.to_i
-        
+
         if input > 0 && input <= 3
             
             case input
@@ -61,7 +61,7 @@ class RandomMoviePicker::CLI
             puts "Find another movie? ('y' or 'n')"
             input = gets.strip.downcase
             if input == "y"
-                select_genre
+                select_category
             elsif input == "n"
                 close
             else
@@ -78,7 +78,6 @@ class RandomMoviePicker::CLI
     def select_year
 
         clear_terminal
-        puts ""
         puts "What year are you looking for? (#{RandomMoviePicker::Categories.years.keys[0]} - #{RandomMoviePicker::Categories.years.keys[-1]})"
         year = gets.strip
         if RandomMoviePicker::Categories.years.has_key?(year)
@@ -90,7 +89,7 @@ class RandomMoviePicker::CLI
             puts "Find another movie? ('y' or 'n')"
             input = gets.strip.downcase
             if input == "y"
-                select_year
+                select_category
             elsif input == "n"
                 close
             else
@@ -153,7 +152,7 @@ class RandomMoviePicker::CLI
             puts "Find another movie? ('y' or 'n')"
             input = gets.strip.downcase
             if input == "y"
-                random_movie
+                select_category
             elsif input == "n"
                 close
             else
@@ -167,7 +166,7 @@ class RandomMoviePicker::CLI
             puts "Find another movie? ('y' or 'n')"
             input = gets.strip.downcase
             if input == "y"
-                random_movie
+                select_category
             elsif input == "n"
                 close
             else
