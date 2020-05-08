@@ -17,12 +17,12 @@ class RandomMoviePicker::CLI
     def select_category
 
         clear_terminal
-        puts "Hi! I'm the Random Movie Picker! 🎬"
+        puts "Hi! I'm the Random Movie Picker!"
         puts ""
         puts "Which category would you like to pick from?"
-        puts "1. Genre 🎭"
-        puts "2. Year 📅"
-        puts "3. Surprise me! 🎉"
+        puts "1. Genre"
+        puts "2. Year"
+        puts "3. Surprise me!"
 
         input = gets.strip.to_i
 
@@ -37,7 +37,7 @@ class RandomMoviePicker::CLI
                 random_movie
             end
         else
-            "❌ Sorry, I don't recognize what you mean by '#{input}'."
+            "Sorry, I don't recognize what you mean by '#{input}'."
             clear_terminal
             select_category
         end
