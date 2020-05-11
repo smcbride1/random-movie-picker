@@ -51,10 +51,10 @@ class RandomMoviePicker::CLI
         puts ""
         puts "What genre are you looking for? (type in the number)"
         input = gets.strip.to_i
-        genre = RandomMoviePicker::Categories.genres.keys[input - 1] if input > 0
+        genre = RandomMoviePicker::Genre.all[input - 1] if input > 0
         if genre != nil
             clear_terminal
-            puts "Awesome! Searching for a(n) #{genre} movie, this might take a couple of seconds..."
+            puts "Awesome! Searching for a(n) #{genre.name} movie, this might take a couple of seconds..."
             new_movie = self.random_by_genre(genre)
             print_movie(new_movie)
             puts ""
@@ -78,11 +78,12 @@ class RandomMoviePicker::CLI
     def select_year
 
         clear_terminal
-        puts "What year are you looking for? (#{RandomMoviePicker::Categories.years.keys[0]} - #{RandomMoviePicker::Categories.years.keys[-1]})"
-        year = gets.strip
-        if RandomMoviePicker::Categories.years.has_key?(year)
+        puts "What year are you looking for? (#{RandomMoviePicker::Year.all[0].name} - #{RandomMoviePicker::Year.all[-1].name})"
+        input = gets.strip
+        year = RandomMoviePicker::Year.find_by_name(input)
+        if year != nil
             clear_terminal
-            puts "Awesome! Searching for a movie from #{year}, this might take a couple of seconds..."
+            puts "Awesome! Searching for a movie from #{year.name}, this might take a couple of seconds..."
             new_movie = self.random_by_year(year)
             print_movie(new_movie)
             puts ""
@@ -97,7 +98,7 @@ class RandomMoviePicker::CLI
                 start
             end
         else
-            puts "Sorry! I couldn't find '#{year}'. Please try again!"
+            puts "Sorry! I couldn't find '#{input}'. Please try again!"
             select_year
         end
 
@@ -121,7 +122,7 @@ class RandomMoviePicker::CLI
 
     def random_by_genre(genre)
 
-        doc = Nokogiri::HTML(open(RandomMoviePicker::Categories.genres[genre]))
+        doc = Nokogiri::HTML(open(genre.url))
         clear_terminal
         movies = doc.css(".table .unstyled.articleLink")
         new_movie = RandomMoviePicker::Movie.new_from_url(movies[rand(movies.length)].attribute("href").text)
@@ -131,7 +132,7 @@ class RandomMoviePicker::CLI
 
     def random_by_year(year)
 
-        doc = Nokogiri::HTML(open(RandomMoviePicker::Categories.years[year]))
+        doc = Nokogiri::HTML(open(year.url))
         clear_terminal
         movies = doc.css(".table .unstyled.articleLink")
         new_movie = RandomMoviePicker::Movie.new_from_url(movies[rand(movies.length)].attribute("href").text)
@@ -146,7 +147,7 @@ class RandomMoviePicker::CLI
         categories = ["genre", "year"]
         case categories.sample
         when "genre"
-            new_movie = self.random_by_genre(RandomMoviePicker::Categories.genres.keys.sample)
+            new_movie = self.random_by_genre(RandomMoviePicker::Genre.all.sample)
             print_movie(new_movie)
             puts ""
             puts "Find another movie? ('y' or 'n')"
@@ -160,7 +161,7 @@ class RandomMoviePicker::CLI
                 start
             end
         when "year"
-            new_movie = self.random_by_year(RandomMoviePicker::Categories.years.keys.sample)
+            new_movie = self.random_by_year(RandomMoviePicker::Year.all.sample)
             print_movie(new_movie)
             puts ""
             puts "Find another movie? ('y' or 'n')"
@@ -180,18 +181,18 @@ class RandomMoviePicker::CLI
     def print_genres
 
         puts "Grabbing content, please wait..."
-        genres = RandomMoviePicker::Categories.genres
+        genres = RandomMoviePicker::Genre.all.map { |genre| genre.name }
         clear_terminal
-        genres.each_with_index { |genre, i| puts "#{i + 1}. #{genre[0]}" }
+        genres.each_with_index { |genre, i| puts "#{i + 1}. #{genre}" }
 
     end
 
     def print_years
 
         puts "Grabbing content, please wait..."
-        years = RandomMoviePicker::Categories.years
+        years = RandomMoviePicker::Year.all.map { |year| year.name }
         clear_terminal
-        years.each_with_index { |year, i| puts "#{i + 1}. #{year[0]}" }
+        years.each_with_index { |year, i| puts "#{i + 1}. #{year}" }
 
     end
 
