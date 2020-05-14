@@ -2,15 +2,12 @@ class RandomMoviePicker::Movie
 
     BASE_URL = "https://www.rottentomatoes.com"
 
-    attr_accessor :title, :year, :rating, :genre, :runtime, :description, :url, :services, :fully_fetched
+    attr_accessor :title, :year, :rating, :genre, :runtime, :description, :url, :services
 
     @@all = []
 
-    #initialize attribute hash was removed because the default empty value was causing setters to not work
-    def initialize#(attributes={})
-        @fully_fetched = false
+    def initialize
         @services = {}
-        #attributes.each { |key, value| self.send(("#{key}="), value) }
         self.class.all.push(self)
     end
 
@@ -35,7 +32,6 @@ class RandomMoviePicker::Movie
         doc.css(".affiliates__list .affiliate__item .affiliate__link").each do |service|
             new_movie.services[service.attribute("data-affiliate").text] = service.attribute("href").text
         end
-        new_movie.fully_fetched = true
         new_movie
     end
 
@@ -46,7 +42,5 @@ class RandomMoviePicker::Movie
     def self.find_by_url(url)
         all.find { |movie| movie.url == url }
     end
-
-    #binding.pry
 
 end

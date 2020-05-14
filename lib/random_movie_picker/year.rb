@@ -1,7 +1,5 @@
 class RandomMoviePicker::Year
 
-    BASE_URL = "https://www.rottentomatoes.com"
-
     attr_accessor :name, :url
 
     @@all = []
@@ -16,7 +14,7 @@ class RandomMoviePicker::Year
         if @@all == []
             doc = Nokogiri::HTML(open("https://www.rottentomatoes.com/top/bestofrt/?year=2020"))
             doc.css(".btn-group.btn-primary-border-dropdown li a").each do |year|
-                self.new(year.text.strip, BASE_URL + year.attribute("href").text)
+                self.new(year.text.strip, "https://www.rottentomatoes.com" + year.attribute("href").text)
             end
             @@all
         else
@@ -25,7 +23,11 @@ class RandomMoviePicker::Year
     end
 
     def self.find_by_name(name)
-        self.all.find { |year| year.name == name }
+        self.all.find { |element| element.name == name }
+    end
+
+    def self.random_year
+        self.all.sample
     end
 
 end
