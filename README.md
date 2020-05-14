@@ -3,7 +3,15 @@ Picks a random movie from Rotten Tomatoes top 100 lists based off of a category 
 
 ## Installation
 
-    $ gem install random-movie-picker
+Add this line to your application's Gemfile:
+
+gem 'random-movie-picker'
+And then execute:
+
+$ bundle
+Or install it yourself as:
+
+$ gem install random-movie-picker
 
 ## Usage
 
