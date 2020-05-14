@@ -26,4 +26,8 @@ class RandomMoviePicker::Genre
         self.all.sample
     end
 
+    def self.names
+        self.all.map { |genre| genre.name }
+    end
+
 end

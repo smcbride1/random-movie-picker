@@ -42,7 +42,8 @@ class RandomMoviePicker::CLI
         if genre != nil
             clear_terminal
             puts "Awesome! Searching for a(n) #{genre.name} movie, this might take a couple of seconds..."
-            new_movie = self.random_movie_by_genre(genre)
+            new_movie = RandomMoviePicker::Scraper.random_movie_by_genre(genre)
+            clear_terminal
             print_movie(new_movie)
             find_another_movie_message
         else
@@ -59,7 +60,8 @@ class RandomMoviePicker::CLI
         if year != nil
             clear_terminal
             puts "Awesome! Searching for a movie from #{year.name}, this might take a couple of seconds..."
-            new_movie = self.random_movie_by_year(year)
+            new_movie = RandomMoviePicker::Scraper.random_movie_by_year(year)
+            clear_terminal
             print_movie(new_movie)
             find_another_movie_message
         else
@@ -74,11 +76,13 @@ class RandomMoviePicker::CLI
         categories = ["genre", "year"]
         case categories.sample
         when "genre"
-            new_movie = self.random_movie_by_genre(RandomMoviePicker::Genre.random_genre)
+            new_movie = RandomMoviePicker::Scraper.random_movie_by_genre(RandomMoviePicker::Genre.random_genre)
+            clear_terminal
             print_movie(new_movie)
             find_another_movie_message
         when "year"
-            new_movie = self.random_movie_by_year(RandomMoviePicker::Year.random_year)
+            new_movie = RandomMoviePicker::Scraper.random_movie_by_year(RandomMoviePicker::Year.random_year)
+            clear_terminal
             print_movie(new_movie)
             find_another_movie_message
         end
@@ -98,27 +102,10 @@ class RandomMoviePicker::CLI
         end
     end
 
-    def random_movie_by_genre(genre)
-        doc = Nokogiri::HTML(open(genre.url))
-        clear_terminal
-        movies = doc.css(".table .unstyled.articleLink")
-        new_movie = RandomMoviePicker::Movie.new_from_url(movies[rand(movies.length)].attribute("href").text)
-        new_movie
-    end
-
-    def random_movie_by_year(year)
-        doc = Nokogiri::HTML(open(year.url))
-        clear_terminal
-        movies = doc.css(".table .unstyled.articleLink")
-        new_movie = RandomMoviePicker::Movie.new_from_url(movies[rand(movies.length)].attribute("href").text)
-        new_movie
-    end
-
     def print_genres
         puts "Grabbing content, please wait..."
-        genres = RandomMoviePicker::Genre.all.map { |genre| genre.name }
         clear_terminal
-        genres.each_with_index { |genre, i| puts "#{i + 1}. #{genre}" }
+        RandomMoviePicker::Genre.names.each_with_index { |genre, i| puts "#{i + 1}. #{genre}" }
     end
 
     def print_movie(movie)
