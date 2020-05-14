@@ -26,8 +26,6 @@ class RandomMoviePicker::CLI
                 select_random_movie
             end
         else
-            puts "Sorry, I don't recognize what you mean by '#{input}'."
-            clear_terminal
             select_category
         end
     end
@@ -47,7 +45,6 @@ class RandomMoviePicker::CLI
             print_movie(new_movie)
             find_another_movie_message
         else
-            puts "Sorry! '#{input}' is not a valid number. Please try again!"
             select_genre
         end
     end
@@ -65,7 +62,6 @@ class RandomMoviePicker::CLI
             print_movie(new_movie)
             find_another_movie_message
         else
-            puts "Sorry! I couldn't find '#{input}'. Please try again!"
             select_year
         end
     end
@@ -97,7 +93,6 @@ class RandomMoviePicker::CLI
         elsif input == "n"
             close
         else
-            puts "Sorry, I don't understand what you mean by '#{input}'; going back to start.'"
             select_category
         end
     end
