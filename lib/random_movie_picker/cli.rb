@@ -1,5 +1,3 @@
-require "pry"
-
 class RandomMoviePicker::CLI
 
     def call

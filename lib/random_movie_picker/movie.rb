@@ -1,7 +1,3 @@
-require "open-uri"
-require "nokogiri"
-require "pry"
-
 class RandomMoviePicker::Movie
 
     BASE_URL = "https://www.rottentomatoes.com"
